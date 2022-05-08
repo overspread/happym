@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"
+    />
+    <title>母亲节快乐</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        -ms-touch-action: manipulation;
+        touch-action: manipulation;
+      }
+
+      html,
+      body {
+        height: 100%;
+        /* 对于触摸屏 */
+        touch-action: none;
+      }
+
+      body {
+        overflow: hidden;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        background: #111;
+        -webkit-perspective: 1000px;
+        perspective: 1000px;
+        -webkit-transform-style: preserve-3d;
+        transform-style: preserve-3d;
+      }
+
+      #drag-container,
+      #spin-container {
+        position: relative;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        margin: auto;
+        -webkit-transform-style: preserve-3d;
+        transform-style: preserve-3d;
+        -webkit-transform: rotateX(-10deg);
+        transform: rotateX(-10deg);
+      }
+
+      #drag-container img,
+      #drag-container video {
+        -webkit-transform-style: preserve-3d;
+        transform-style: preserve-3d;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        line-height: 200px;
+        font-size: 50px;
+        text-align: center;
+        -webkit-box-shadow: 0 0 8px #fff;
+        box-shadow: 0 0 8px #fff;
+        -webkit-box-reflect: below 10px
+          linear-gradient(transparent, transparent, #0005);
+      }
+      /* 镜像 */
+      /* #drag-container img,
+      #drag-container video {
+        -webkit-box-shadow: 0 0 15px #fffd;
+        box-shadow: 0 0 15px #fffd;
+        -webkit-box-reflect: below 10px
+          linear-gradient(transparent, transparent, #0007);
+      } */
+      #drag-container .imgActive {
+        -webkit-box-shadow: 0 0 15px #fffd;
+        box-shadow: 0 0 15px #fffd;
+        -webkit-box-reflect: below 10px
+          linear-gradient(transparent, transparent, #0007);
+      }
+      #drag-container p {
+        font-family: Serif;
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        -webkit-transform: translate(-50%, -50%) rotateX(90deg);
+        transform: translate(-50%, -50%) rotateX(90deg);
+        color: #fff;
+      }
+      /* 地面样式 */
+      #ground {
+        width: 900px;
+        height: 900px;
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        -webkit-transform: translate(-50%, -50%) rotateX(90deg);
+        transform: translate(-50%, -50%) rotateX(90deg);
+        background: -webkit-radial-gradient(
+          center center,
+          farthest-side,
+          #9993,
+          transparent
+        );
+      }
+
+      #music-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+
+      @-webkit-keyframes spin {
+        from {
+          -webkit-transform: rotateY(0deg);
+          transform: rotateY(0deg);
+        }
+        to {
+          -webkit-transform: rotateY(360deg);
+          transform: rotateY(360deg);
+        }
+      }
+
+      @keyframes spin {
+        from {
+          -webkit-transform: rotateY(0deg);
+          transform: rotateY(0deg);
+        }
+        to {
+          -webkit-transform: rotateY(360deg);
+          transform: rotateY(360deg);
+        }
+      }
+      @-webkit-keyframes spinRevert {
+        from {
+          -webkit-transform: rotateY(360deg);
+          transform: rotateY(360deg);
+        }
+        to {
+          -webkit-transform: rotateY(0deg);
+          transform: rotateY(0deg);
+        }
+      }
+      /* 整体旋转方向 */
+      @keyframes spinRevert {
+        from {
+          -webkit-transform: rotateY(0deg);
+          transform: rotateY(0deg);
+        }
+        to {
+          -webkit-transform: rotateY(360deg);
+          transform: rotateY(360deg);
+        }
+      }
+      /* 文字样式 */
+      .happy {
+        width: 210px;
+        font-size: 26px;
+        color: red;
+        text-align: center;
+        text-shadow: 0 2px #ff120e;
+      }
+      .happy .Jhappy {
+        color: pink;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="drag-container">
+      <!-- 内容区域 -->
+      <div id="spin-container">
+        <!-- 添加图片 or 视频 -->
+        <img src="./img/0.jpg" alt="" />
+        <img src="./img/1.jpg" alt="" />
+        <img src="./img/2.jpg" alt="" />
+        <img src="./img/3.jpg" alt="" />
+        <img src="./img/4.jpg" alt="" />
+        <img src="./img/5.jpg" alt="" />
+        <img src="./img/6.jpg" alt="" />
+        <img src="./img/7.jpg" alt="" />
+        <video controls autoplay="autoplay" loop>
+          <source src="./img/0.mp4" type="video/mp4" />
+        </video>
+
+        <!-- 示例图片链接 -->
+        <!--  <a
+          target="_blank"
+          href="https://images.pexels.com/photos/139829/pexels-photo-139829.jpeg"
+        >
+          <img
+            src="https://images.pexels.com/photos/139829/pexels-photo-139829.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+            alt=""
+          />
+        </a> -->
+
+        <!-- 示例添加视频  -->
+        <!-- <video controls autoplay="autoplay" loop>
+          <source
+            src="https://player.vimeo.com/external/322244668.sd.mp4?s=338c48ac2dfcb1d4c0689968b5baf94eee6ca0c1&profile_id=165&oauth2_token_id=57447761"
+            type="video/mp4"
+          />
+        </video> -->
+
+        <!-- 中间地面文字-->
+        <p class="happy">
+          妈妈 母亲节快乐
+          <span class="Jhappy">我姐姐说:我从未让你骄傲,你却待我如宝</span>
+        </p>
+      </div>
+      <!-- 地面 -->
+      <div id="ground"></div>
+    </div>
+
+    <!-- 音乐区域 -->
+    <div id="music-container"></div>
+
+    <script>
+      // 你可以在这里改变全局变量:
+
+      // 内容半径有多大
+      var radius = 300;
+
+      // 是否开始自动旋转
+      var autoRotate = true;
+
+      // 单位:秒/ 360度  为零停止
+      var rotateSpeed = 60;
+
+      // width of images (单位: px)
+      var imgWidth = 120;
+      // height of images (单位: px)
+      var imgHeight = 170;
+
+      // 背景音乐的链接-设置'null'如果你不想播放背景音乐
+      /* 音乐错误 */
+      var bgMusicURL =
+        "https://api.soundcloud.com/tracks/143041228/stream?client_id=587aa2d384f7333a886010d5f52f302a";
+
+      // 是否显示音乐控制
+      var bgMusicControls = false;
+
+      /*
+                      注意:
+                        + imgWidth, imgHeight 用于页面内容
+                        + 如果imgWidth, imgHeight太小，<video>中的播放/暂停按钮将被隐藏
+                 */
+
+      // ===================== start =======================
+      // 一秒钟后执行 图片旋转
+      setTimeout(init, 1000);
+
+      // 整个div
+      var odrag = document.getElementById("drag-container");
+      // 页面内容
+      var ospin = document.getElementById("spin-container");
+      // 所有 img 元素
+      var aImg = ospin.getElementsByTagName("img");
+      // 所有 video 元素
+      var aVid = ospin.getElementsByTagName("video");
+      // 把 img 和 video 整合在数组中
+      var aEle = [...aImg, ...aVid];
+
+      // 触摸取消旋转
+      for (let i = 0; i < aEle.length; i++) {
+        aEle[i].ontouchstart = function (e) {
+          e.preventDefault();
+          playSpin(false);
+          aEle[i].className = "imgActive";
+        };
+        aEle[i].ontouchend = function (e) {
+          playSpin(true);
+          e.preventDefault();
+          aEle[i].className = "";
+        };
+      }
+
+      // 页面内容的大小
+      ospin.style.width = imgWidth + "px";
+      ospin.style.height = imgHeight + "px";
+
+      // 地面的大小-取决于半径
+      var ground = document.getElementById("ground");
+      ground.style.width = radius * 3 + "px";
+      ground.style.height = radius * 3 + "px";
+
+      // 开始旋转在即定轨道显示
+      function init(delayTime) {
+        for (var i = 0; i < aEle.length; i++) {
+          aEle[i].style.transform =
+            "rotateY(" +
+            i * (360 / aEle.length) +
+            "deg) translateZ(" +
+            radius +
+            "px)";
+          aEle[i].style.transition = "transform 1s";
+          aEle[i].style.transitionDelay =
+            delayTime || (aEle.length - i) / 4 + "s";
+        }
+      }
+
+      // 整个页面的 角度
+      function applyTranform(obj) {
+        // 约束相机的角度(在0和180之间)
+        if (tY > 180) tY = 180;
+        if (tY < 0) tY = 0;
+
+        // 调整页面的角度
+        obj.style.transform = "rotateX(" + -tY + "deg) rotateY(" + tX + "deg)";
+      }
+      // 页面内容运行方式
+      function playSpin(yes) {
+        ospin.style.animationPlayState = yes ? "running" : "paused";
+      }
+
+      var sX,
+        sY,
+        nX,
+        nY,
+        desX = 0,
+        desY = 0,
+        tX = 0,
+        tY = 10;
+
+      // 自动旋转
+      if (autoRotate) {
+        var animationName = rotateSpeed > 0 ? "spin" : "spinRevert";
+        ospin.style.animation = `${animationName} ${Math.abs(
+          rotateSpeed
+        )}s infinite linear`;
+      }
+
+      // 添加背景音乐
+      if (bgMusicURL) {
+        document.getElementById("music-container").innerHTML += `
+                 <audio src="${bgMusicURL}" ${
+          bgMusicControls ? "controls" : ""
+        } autoplay loop>
+                 <p>If you are reading this, it is because your browser does not support the audio element.</p>
+                 </audio>
+                 `;
+      }
+
+      // 设置事件 鼠标按下
+      document.onpointerdown = function (e) {
+        clearInterval(odrag.timer);
+        e = e || window.event;
+        var sX = e.clientX,
+          sY = e.clientY;
+
+        // 触摸移动的方向
+        this.onpointermove = function (e) {
+          e = e || window.event;
+          var nX = e.clientX,
+            nY = e.clientY;
+          desX = nX - sX;
+          desY = nY - sY;
+          tX += desX * 0.1;
+          tY += desY * 0.1;
+          applyTranform(odrag);
+          sX = nX;
+          sY = nY;
+        };
+        // 自动旋转
+        this.onpointerup = function (e) {
+          odrag.timer = setInterval(function () {
+            desX *= 0.95;
+            desY *= 0.95;
+            tX += desX * 0.1;
+            tY += desY * 0.1;
+            applyTranform(odrag);
+
+            playSpin(false);
+            // 大于0.5度就清除
+            if (Math.abs(desX) < 0.5 && Math.abs(desY) < 0.5) {
+              clearInterval(odrag.timer);
+              playSpin(true);
+            }
+          }, 17);
+          this.onpointermove = this.onpointerup = null;
+        };
+        // 鼠标点击 抬起取消
+        return false;
+      };
+      applyTranform(odrag);
+
+      // 双指触摸调整整个内容角度
+      // 页面缩放比例
+      var store = { scale: 1 };
+      // 缩放事件处理
+      document.addEventListener("touchstart", function (e) {
+        e.preventDefault();
+        // 事件属性
+        var touches = e.touches;
+        // console.log(touches);
+        // 第一个手指点击
+        var events = touches[0];
+        // 第二个手指点击
+        var events2 = touches[1];
+
+        // 第一个触摸点的坐标
+        store.pageX = events.pageX;
+        store.pageY = events.pageY;
+
+        store.moveable = true;
+
+        // 第二个触摸点的坐标
+        if (events2) {
+          store.pageX2 = events2.pageX;
+          store.pageY2 = events2.pageY;
+        }
+
+        document.addEventListener("touchmove", function (event) {
+          if (!store.moveable) {
+            return;
+          }
+          event.preventDefault();
+
+          var touches = event.touches;
+          var events = touches[0];
+          var events2 = touches[1];
+          // 双指移动
+          if (events2) {
+            // 第2个指头坐标在touchmove时候获取
+            if (!store.pageX2) {
+              store.pageX2 = events2.pageX;
+            }
+            if (!store.pageY2) {
+              store.pageY2 = events2.pageY;
+            }
+
+            // 获取坐标之间的距离
+            var getDistance = function (start, stop) {
+              return Math.hypot(stop.x - start.x, stop.y - start.y);
+            };
+            // 双指缩放比例计算
+            var zoom =
+              getDistance(
+                {
+                  x: events.pageX,
+                  y: events.pageY,
+                },
+                {
+                  x: events2.pageX,
+                  y: events2.pageY,
+                }
+              ) /
+              getDistance(
+                {
+                  x: store.pageX,
+                  y: store.pageY,
+                },
+                {
+                  x: store.pageX2,
+                  y: store.pageY2,
+                }
+              );
+            console.log(zoom);
+            if (zoom > 1) {
+              radius += zoom;
+            } else {
+              radius -= zoom;
+            }
+
+            init(1);
+          }
+        });
+      });
+
+      document.addEventListener("touchend", function () {
+        store.moveable = false;
+
+        delete store.pageX2;
+        delete store.pageY2;
+      });
+      document.addEventListener("touchcancel", function () {
+        store.moveable = false;
+
+        delete store.pageX2;
+        delete store.pageY2;
+      });
+      // 鼠标滚轮调整整个内容半径
+      document.onmousewheel = function (e) {
+        e = e || window.event;
+        console.log(e.detail, e.wheelDelta);
+        var d = e.wheelDelta / 20 || -e.detail;
+        radius += d;
+        init(1);
+      };
+    </script>
+  </body>
+</html>
